@@ -8,5 +8,6 @@
 #include "inputdev/DualshockPad.hpp"
 #include "inputdev/GenericPad.hpp"
 #include "inputdev/NintendoPowerA.hpp"
+#include "inputdev/SwitchPad.hpp"
 #include "graphicsdev/IGraphicsCommandQueue.hpp"
 #include "graphicsdev/IGraphicsDataFactory.hpp"

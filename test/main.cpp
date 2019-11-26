@@ -93,19 +93,32 @@ class NintendoPowerACallback : public INintendoPowerACallback {
   }
 };
 
+class SwitchProPadCallback : public ISwitchProPadCallback {
+  void controllerDisconnected() override { fprintf(stderr, "CONTROLLER DISCONNECTED\n"); }
+  void controllerUpdate(const SwitchPadState& state) override {
+//    fprintf(stderr,
+//            "%i %i\n"
+//            "%i %i\n",
+//            state.leftX, state.leftY, state.rightX, state.rightY);
+  }
+};
+
 class TestDeviceFinder : public DeviceFinder {
   std::shared_ptr<DolphinSmashAdapter> m_smashAdapter;
   std::shared_ptr<NintendoPowerA> m_nintendoPowerA;
   std::shared_ptr<DualshockPad> m_ds3;
+  std::shared_ptr<SwitchPad> m_switchPro;
   std::shared_ptr<GenericPad> m_generic;
   DolphinSmashAdapterCallback m_cb;
   NintendoPowerACallback m_nintendoPowerACb;
   DualshockPadCallback m_ds3CB;
   GenericPadCallback m_genericCb;
+  SwitchProPadCallback m_switchProCB;
 
 public:
   TestDeviceFinder()
-  : DeviceFinder({dev_typeid(DolphinSmashAdapter), dev_typeid(NintendoPowerA), dev_typeid(GenericPad)}) {}
+  : DeviceFinder({dev_typeid(DolphinSmashAdapter), dev_typeid(NintendoPowerA), dev_typeid(GenericPad),
+                  dev_typeid(SwitchProPad)}) {}
   void deviceConnected(DeviceToken& tok) override {
     auto dev = tok.openAndGetDevice();
     if (!dev)
@@ -121,6 +134,9 @@ public:
       m_ds3 = std::static_pointer_cast<DualshockPad>(dev);
       m_ds3->setCallback(&m_ds3CB);
       m_ds3->setLED(EDualshockLED::LED_1);
+    } else if (dev->getTypeHash() == dev_typeid(SwitchProPad)) {
+      m_switchPro = std::static_pointer_cast<SwitchPad>(dev);
+      m_switchPro->setCallback(&m_switchProCB);
     } else if (dev->getTypeHash() == dev_typeid(GenericPad)) {
       m_generic = std::static_pointer_cast<GenericPad>(dev);
       m_generic->setCallback(&m_genericCb);

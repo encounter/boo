@@ -37,6 +37,7 @@ add_library(boo
   lib/inputdev/RevolutionPad.cpp include/boo/inputdev/RevolutionPad.hpp
   lib/inputdev/DolphinSmashAdapter.cpp include/boo/inputdev/DolphinSmashAdapter.hpp
   lib/inputdev/NintendoPowerA.cpp include/boo/inputdev/NintendoPowerA.hpp
+  lib/inputdev/SwitchPad.cpp include/boo/inputdev/SwitchPad.hpp
   lib/inputdev/DualshockPad.cpp include/boo/inputdev/DualshockPad.hpp
   lib/inputdev/GenericPad.cpp include/boo/inputdev/GenericPad.hpp
   lib/inputdev/DeviceSignature.cpp include/boo/inputdev/DeviceSignature.hpp
